@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+
+{% block title %} {% endblock %}
+
+
+
+
+
+{% block body1 %}
+
+<style>
+
+.mind_home {
+    border: 4px solid black;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
+
+.mind_home img{
+    width: 100%;
+    border-radius: 10px;
+}
+.mind_home p {
+    font-size: 18px;
+}
+
+</style>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+
+
+
+
+
+
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+
+
+
+
+  {% if orginals.number|add:'-2' > 1 %}
+    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ orginals.number|add:'-5' }}"> jump 5 back &hellip;</a></li>
+  {% endif %}
+
+
+
+  {% for i in orginals.paginator.page_range %}
+
+    {% if orginals.number == i %}
+
+    <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+      {% elif i > orginals.number|add:'-4' and i < orginals.number|add:'4' %}
+    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+
+     {% endif %}
+  {% endfor %}
+
+
+
+
+  {% if orginals.number|add:'-2' > 1 %}
+
+    <li class="page-item"><a class="page-link" href="?page={{ orginals.number|add:'5' }}">jump 5 next &hellip;</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{ orginals.paginator.count }}">{{ orginals.paginator.count }}</a></li>
+    {% endif %}
+
+  </ul>
+</nav>
+
+
+
+
+
+
+
+
+        </div>
+        
+        
+        
+        
+        <div class="col-sm-4">
+            
+
+            {% for org in orginals %}
+                <div class="mind_home">
+                <img src="{{ org.aks_asli_1.url }}">
+                 <p class="btn btn-danger">{{ org.dislike_post.all.count }} :دیس لایک </p>
+                 <p class="btn btn-info">{{ org.like_post.all.count }}:لایک</p>
+                 <p class="btn btn-warning">{{ org.viewed_post.all.count }}:ویو</p>
+                 <p>{{ org.metrazh }}: متراژ </p>
+                 <p>{{ org.tedade_otag_khab }}:اتاق خواب</p>
+                 <p>{{ org.finder_home }}: نام</p>
+                 <p>{{ org.home_code }}: کد </p>
+                 <p>{{ org.balkon }} : بالکن</p>
+                 <p>{{ org.tabaghe_chandom }} : طبقه </p>
+                 <p>{{ org.kagaz_divary }}:کاغذدیواری</p>
+                 <p>{{ org.mantaghe_shargi_ya_gharbi }}:منطقه</p>
+                 <p>{{ org.tarikh_sakht }} : تاریخ ساخت </p>
+                <a href="{{ org.get_absolute_url }}" class="btn btn-success">ادامه مطلب</a>
+
+
+            {% endfor %}
+            </div>
+            
+            
+            
+            
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div class="col-sm-4">
+
+            <div class="boxing_tags">
+
+                <form action="{% url 'website:searched_tags' %}" method="post">
+                    <input type="text" name="generays">
+                    <button type="submit">Enter</button>
+
+
+
+                </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    </div>
+    
+    
+{% endblock %}
+
+

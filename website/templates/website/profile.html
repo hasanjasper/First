@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Profile {{ user }} {% endblock %}
+
+
+
+{% block body1 %}
+
+<style>
+
+.mind_profile {
+    position: relative;
+    text-align: center;
+    border: 3px solid black;
+    border-radius: 20px;
+}
+
+
+
+
+
+</style>
+
+
+<div class="container">
+<div class="row">
+    <div class="col-sm-4">
+        
+        
+        
+        <a href="{% url 'website:create_profile' %}">
+            created profile
+        </a>
+<br><hr>
+
+        <a href="{% url 'website:deleted_profile' %}">Deleted Profile</a>
+        <br><hr>
+
+        <a href="{% url 'website:update_profile' %}">update Profile</a>
+
+        
+        
+        
+        
+        
+        
+    </div>
+
+
+
+
+
+
+
+
+{% if find_user %}
+    <div class="col-sm-4">
+    {% for find_us in find_user %}
+
+        <div class="mind_profile">
+<img src="{{ find_us.image.url }}" style="border-radius: 20px;width: 250px;height: 250px">
+            <p>{{ find_us.users }}:نام</p>
+            <p>{{ find_us.fake_name }}:لقب</p>
+            <p>{{ find_us.slug }}:کد</p>
+            <p>{{ find_us.age }}:سن</p>
+            <p>{{ find_us.body }}:مطلب</p>
+            <p>{{ find_us.created }}:تاریخ</p>
+
+</div>
+
+
+{% endfor %}
+    </div>
+
+
+
+{% else %}
+    
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRutecZ6IyjEBVBfJbSbroPEqFF4xptR4DJRA&usqp=CAU" style="width: 250px;height: 250px">
+<center>
+    <p>:نام</p>
+    <p>:لقب</p>
+    <p>:کد</p>
+    <p>:سن</p>
+    <p>:مطلب</p>
+    <p>:تاریخ</p>
+</center>
+
+{% endif     %}
+
+
+
+
+
+
+
+
+
+
+    <div class="col-sm-4"></div>
+</div>
+</div>
+
+
+
+
+
+{% endblock %}

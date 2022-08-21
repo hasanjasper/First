@@ -1,0 +1,529 @@
+{% extends 'base.html' %}
+
+
+{% block title %}  {% endblock %}
+
+
+{% block body1 %}
+
+
+
+
+
+
+
+
+
+
+<style>
+.pv_home {
+    border: 3px solid black;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+    font-size: 18px;
+        border-radius: 10px;
+
+}
+
+.galb_image img{
+    width: 200px;
+    border-radius: 10px;
+    border: 2px solid gray;
+    width: 200px;
+}
+
+
+.galb {
+    position: relative;
+    width: 50%;
+}
+
+
+.hidens {
+    position: absolute;
+    background-color: seagreen;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 3s ease;
+
+}
+
+.galb:hover .hidens{
+    bottom: 100%;
+    opacity: 1;
+    transition: 3s ease;
+}
+.imaged {
+    width: 100%;
+    height: 100%;
+}
+.mtn {
+    opacity: 0;
+}
+
+.galb:hover .mtn{
+    position: absolute;
+    left: 40%;
+    top: 20%;
+    color: white;
+    text-shadow: 3px 3px 3px white;
+    text-decoration: none;
+    transition: 3s ease;
+    opacity: 1;
+
+
+
+}
+.com_box {
+    border-radius: 20px;
+    border: 3px solid black;
+}
+
+.com_box img{
+    border-radius: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+</style>
+
+
+
+
+
+
+
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+        <div class="com_full_box">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><hr>
+<div class="add_coment">
+
+
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#runners" aria-expanded="false" aria-controls="collapseWidthExample">
+    Toggle width collapse
+  </button>
+
+
+<form  class="collapse collapse-horizontal" action="{% url 'website:add_commenter' item.id %}" method="post" enctype="multipart/form-data" id="runners">
+    {% csrf_token %}
+    <button class="btn btn-success" type="submit"  onclick="loadDoc('{% url 'website:add_commenter' item.id %}')">Enter</button>
+       <textarea id="demo" name="text_body"></textarea>
+</form>
+
+
+</div>
+
+
+
+<script>
+function loadDoc(url){
+  const xhttp =  new XMLHttpRequest();
+  xhttp.onload = function () {
+  document.getElementById('demo').setAttributeNode=  window.location.reload();
+
+  }
+  xhttp.open("GET", url);
+  xhttp.send();
+
+}
+</script>
+<br><hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% for com in commer %}
+{% if com %}
+                    <div class="com_box">
+
+                    <img src="{{ com.commenter_name.image.url }}" width="60px">
+                    <p>{{ com.commenter_name }}</p>
+                    <p>{{ com.time_created }}</p>
+                        <p>{{ com.text_body }}</p>
+
+
+
+{##}
+{#    {% if user.is_superuser %}#}
+{##}
+{#                        <a href="{% url 'website:deleted_comment' com.id item.slug %}">delete</a>#}
+{##}
+{#{% endif %}#}
+
+    {% if user == com.commenter_name.users or  user.is_superuser %}
+
+                        <a href="{% url 'website:deleted_comment' com.id item.slug %}">delete</a>
+
+
+{% endif %}
+
+
+
+
+
+
+
+<button class="btn btn-success" type="submit" id="demo" onclick="loadDoc('{% url 'website:like_comment' com.id %}')">like {{ com.liked_comment.all.count }}</button>
+
+
+
+<script>
+function loadDoc(url){
+  const xhttp =  new XMLHttpRequest();
+  xhttp.onload = function () {
+  document.getElementById('demo').setAttributeNode=  window.location.reload();
+
+  }
+  xhttp.open("GET", url);
+  xhttp.send();
+
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button class="btn btn-danger" type="submit" id="demo" onclick="loadDoc('{% url 'website:dislike_comment' com.id %}')">dislike {{ com.disliked_comment.all.count }}</button>
+
+
+
+<script>
+function loadDoc(url){
+  const xhttp =  new XMLHttpRequest();
+  xhttp.onload = function () {
+  document.getElementById('demo').setAttributeNode=  window.location.reload();
+
+  }
+  xhttp.open("GET", url);
+  xhttp.send();
+
+}
+{#outerText#}
+{#function myrefresh() {#}
+{#    window.location.reload();#}
+{#setTimeout('myrefresh()', 1000); // Specify one refresh per second#}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+{% else %}
+<h1>sory dear not comment in the post</h1>
+
+
+{% endif %}
+
+
+
+                    </div>
+
+                {% endfor %}
+
+
+
+
+        </div>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+        <div class="col-sm-6">
+
+            <div class="pv_home">
+
+<div class="galb">
+                     <img class="imaged" id="imaged" src="{{ item.aks_asli_1.url }}" style="    border-radius: 10px;">
+
+
+<div class="hidens">
+    <a class="mtn">heelow</a>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <p>{{ item.home_code }}:کد </p>
+                <p>{{ item.metrazh }}:متراژ</p>
+                <p>{{ item.geymt }}:قیمت</p>
+                <p>{{ item.ejare }}:اجاره</p>
+                <p>{{ item.vadie_rahn }}:رهن</p>
+                <p>{{ item.estakhr }}:استخر</p>
+                <p>{{ item.coler }}:کولر</p>
+                <p>{{ item.parking }}:پارکینگ</p>
+                <p>{{ item.shomine }}:شومینه</p>
+                <p>{{ item.sanad_tak_barg }}:سند تک برگ</p>
+                <p class="btn btn-danger" >{{ item.viewed_post.all.count }}:تعداد بازدید</p>
+
+<hr>
+
+
+
+
+
+
+<button class="btn btn-success" type="submit" id="demo" onclick="loadDoc('{% url 'website:likdes' item.id %}')">like {{ item.like_post.all.count }}</button>
+
+
+
+<script>
+function loadDoc(url){
+  const xhttp =  new XMLHttpRequest();
+  xhttp.onload = function () {
+  document.getElementById('demo').setAttributeNode=  window.location.reload();
+
+  }
+  xhttp.open("GET", url);
+  xhttp.send();
+
+}
+{#outerText#}
+{#function myrefresh() {#}
+{#    window.location.reload();#}
+{#setTimeout('myrefresh()', 1000); // Specify one refresh per second#}
+
+</script>
+
+{#_____________________________________________________________________________________________________#}
+<button class="btn btn-danger" type="submit" id="player" onclick="loadDoc('{% url 'website:dislikdes' item.id %}')">Dislike {{ item.dislike_post.all.count }}</button>
+
+
+
+<script>
+function loadDoc(url){
+  const xhttp =  new XMLHttpRequest();
+  xhttp.onload = function () {
+  document.getElementById('player').setAttributeNode=  window.location.reload();
+
+  }
+  xhttp.open("GET", url);
+  xhttp.send();
+
+}
+{#outerText#}
+{#function myrefresh() {#}
+{#    window.location.reload();#}
+{#setTimeout('myrefresh()', 1000); // Specify one refresh per second#}
+
+</script>
+
+
+
+
+
+
+                <p>{{ item.shomare_telefon }}:شماره تلفن</p>
+                <p>{{ item.kagaz_divary}}:کاغذ دیواری</p>
+                <p>{{ item.tabaghe_chandom }}:طبقه</p>
+                <p>{{ item.tarikh_sakht }}:تاریخ ساخت</p>
+                <p>{{ item.tedad_dasteshoyi }}:تعداد دستشویی</p>
+                <p>{{ item.tedad_hamam }}:تعداد حمام</p>
+                <p>{{ item.tedade_otag_khab }}:تعداد اتاق خواب</p>
+                <p>{{ item.kaf_seamick }}:کف سرامیک</p>
+                <p>{{ item.jens_kabint }}:جنس کابینت</p>
+                <p>{{ item.nama_romy }}:نما رومی</p>
+                <p>{{ item.ertefae_saghf }}:ارتفاع سقف</p>
+                <p>{{ item.balkon }}:بالکن</p>
+                <p>{{ item.anbari }}:انباری</p>
+                <p>{{ item.coler }}:کولر</p>
+                <p>{{ item.dorbin }}:دوربین</p>
+                <p>{{ item.adderss}}:آدرس</p>
+                <hr>
+                <p>{{ item.tozihat }}:توضیحات</p>
+                    <a href="{{ item.ertefae_saghf }}" class="btn btn-danger" download="alerts">download like</a>
+                <p></p>
+
+            </div>
+
+
+
+
+
+
+
+{# <button type="submit" id="demo" onclick="loadDoc('{% url 'kharid_khone:likdes' item.id %}')"></button>#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="col-sm-4">
+             <div class="galb_image">
+              <a href="{{ item.aks_dakhli_1.url }}" target="_blank">  <img src="{{ item.aks_dakhli_1.url }}"></a>
+              <a href="{{ item.aks_dakhli_1.url }}" target="_blank">  <img src="{{ item.aks_dakhli_2.url }}"></a>
+              <a href="{{ item.aks_dakhli_1.url }}" target="_blank">  <img src="{{ item.aks_dakhli_3.url }}"></a>
+              <a href="{{ item.aks_dakhli_1.url }}" target="_blank">  <img src="{{ item.aks_dakhli_4.url }}"></a>
+              <a href="{{ item.aks_dakhli_1.url }}" target="_blank">  <img src="{{ item.aks_dakhli_5.url }}"></a>
+
+            </div>
+
+
+    </div>
+    </div>        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
